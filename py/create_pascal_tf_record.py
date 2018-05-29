@@ -87,8 +87,8 @@ def dict_to_tf_example(data,
     ValueError: if the image pointed to by data['filename'] is not a valid JPEG
   """
   # 下面这句里的replace就是针对reccoon的标注文件里的filename标签后缀错误而特别添加的
-  # img_path = os.path.join(dataset_directory, data['filename'].replace('.png','.jpg').replace('.PNG','.jpg'))
-  img_path = os.path.join(dataset_directory, data['filename'])
+  img_path = os.path.join(dataset_directory, data['filename'].replace('.png','.jpg').replace('.PNG','.jpg'))
+  # img_path = os.path.join(dataset_directory, data['filename'])
   full_path = img_path
   with tf.gfile.GFile(full_path, 'rb') as fid:
     encoded_jpg = fid.read()
