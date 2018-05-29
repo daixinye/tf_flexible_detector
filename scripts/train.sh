@@ -1,6 +1,6 @@
 #!/bin/bash
 root=~/workspace/tf_febric_detector
-config_name="ssd_mobilenet_v1_raccoon.config"
+config_name="ssd_mobilenet_v1.config"
 train_dir="train"
 
 python ../py/train.py --logtostderr \
