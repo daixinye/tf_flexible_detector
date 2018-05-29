@@ -1,7 +1,8 @@
-annotations
-images
+annotations*
+images*
 ssd_mobilenet_v1_coco_2017_11_17
-train
+train*
 eval
 output
 *.record*
+_*
