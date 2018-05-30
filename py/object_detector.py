@@ -6,7 +6,7 @@
 
 # # Imports
 
-# In[19]:
+# In[1]:
 
 
 import numpy as np
@@ -23,7 +23,6 @@ from matplotlib import pyplot as plt
 from PIL import Image
 
 # This is needed since the notebook is stored in the object_detection folder.
-sys.path.append("..")
 from object_detection.utils import ops as utils_ops
 
 if tf.__version__ < '1.4.0':
@@ -32,7 +31,7 @@ if tf.__version__ < '1.4.0':
 
 # ## Env setup
 
-# In[20]:
+# In[2]:
 
 
 # This is needed to display the images.
@@ -42,12 +41,12 @@ if tf.__version__ < '1.4.0':
 # ## Object detection imports
 # Here are the imports from the object detection module.
 
-# In[21]:
+# In[3]:
 
 
-from utils import label_map_util
+from object_detection.utils import label_map_util
 
-from utils import visualization_utils as vis_util
+from object_detection.utils import visualization_utils as vis_util
 
 
 # # Model preparation 
@@ -58,17 +57,17 @@ from utils import visualization_utils as vis_util
 # 
 # By default we use an "SSD with Mobilenet" model here. See the [detection model zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md) for a list of other models that can be run out-of-the-box with varying speeds and accuracies.
 
-# In[22]:
+# In[4]:
 
 
 # What model to download.
-#MODEL_NAME = 'ssd_mobilenet_v1_coco_2017_11_17'
-#MODEL_FILE = MODEL_NAME + '.tar.gz'
-#sDOWNLOAD_BASE = 'http://download.tensorflow.org/models/object_detection/'
+# MODEL_NAME = 'ssd_mobilenet_v1_coco_2017_11_17'
+# MODEL_FILE = MODEL_NAME + '.tar.gz'
+# DOWNLOAD_BASE = 'http://download.tensorflow.org/models/object_detection/'
 
 # Path to frozen detection graph. This is the actual model that is used for the object detection.
 # PATH_TO_CKPT = MODEL_NAME + '/frozen_inference_graph.pb'
-PATH_TO_CKPT = '/home/daixinye/workspace/tf_febric_detector/_train/_train_2/output/frozen_inference_graph.pb'
+PATH_TO_CKPT = '/home/daixinye/workspace/tf_febric_detector/output/frozen_inference_graph.pb'
 
 # List of the strings that is used to add correct label for each box.
 # PATH_TO_LABELS = os.path.join('data', 'mscoco_label_map.pbtxt')
@@ -79,7 +78,7 @@ NUM_CLASSES = 90
 
 # ## Download Model
 
-# In[23]:
+# In[5]:
 
 
 # opener = urllib.request.URLopener()
@@ -93,7 +92,7 @@ NUM_CLASSES = 90
 
 # ## Load a (frozen) Tensorflow model into memory.
 
-# In[24]:
+# In[6]:
 
 
 detection_graph = tf.Graph()
@@ -108,7 +107,7 @@ with detection_graph.as_default():
 # ## Loading label map
 # Label maps map indices to category names, so that when our convolution network predicts `5`, we know that this corresponds to `airplane`.  Here we use internal utility functions, but anything that returns a dictionary mapping integers to appropriate string labels would be fine
 
-# In[25]:
+# In[7]:
 
 
 label_map = label_map_util.load_labelmap(PATH_TO_LABELS)
@@ -118,7 +117,7 @@ category_index = label_map_util.create_category_index(categories)
 
 # ## Helper code
 
-# In[26]:
+# In[8]:
 
 
 def load_image_into_numpy_array(image):
@@ -129,7 +128,7 @@ def load_image_into_numpy_array(image):
 
 # # Detection
 
-# In[27]:
+# In[48]:
 
 
 # For the sake of simplicity we will use only 2 images:
@@ -138,13 +137,13 @@ def load_image_into_numpy_array(image):
 # If you want to test the code with your images, just add path to the images to the TEST_IMAGE_PATHS.
 PATH_TO_TEST_IMAGES_DIR = 'test_images'
 # TEST_IMAGE_PATHS = [ os.path.join(PATH_TO_TEST_IMAGES_DIR, 'image{}.jpg'.format(i)) for i in range(1, 4) ]
-TEST_IMAGE_PATHS = ['/home/daixinye/workspace/tf_febric_detector/_test/e89e0ebe60b5066d42d43e6cde3f837c.jpg']
+TEST_IMAGE_PATHS = ['/home/daixinye/workspace/tf_febric_detector/test/8cb21527f9d745d9dc4d538d617bdb92.jpg']
 
 # Size, in inches, of the output images.
 IMAGE_SIZE = (24, 16)
 
 
-# In[28]:
+# In[49]:
 
 
 def run_inference_for_single_image(image, graph):
@@ -194,7 +193,7 @@ def run_inference_for_single_image(image, graph):
   return output_dict
 
 
-# In[29]:
+# In[50]:
 
 
 for image_path in TEST_IMAGE_PATHS:
