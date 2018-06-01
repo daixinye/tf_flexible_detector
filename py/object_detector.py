@@ -102,8 +102,8 @@ def run_inference_for_single_image(image, graph):
         output_dict['detection_masks'] = output_dict['detection_masks'][0]
   return output_dict
 
-def detect():
-  for image_path in TEST_IMAGE_PATHS:
+def detect(image_paths):
+  for image_path in image_paths:
     image = Image.open(image_path)
     # the array based representation of the image will be used later in order to prepare the
     # result image with boxes and labels on it.
@@ -129,30 +129,46 @@ def detect():
 import tkFileDialog
 import Tkinter as tk
 
-# If you want to test the code with your images, just add path to the images to the TEST_IMAGE_PATHS.
-PATH_TO_TEST_IMAGES_DIR = 'test_images'
-# TEST_IMAGE_PATHS = [ os.path.join(PATH_TO_TEST_IMAGES_DIR, 'image{}.jpg'.format(i)) for i in range(1, 4) ]
-TEST_IMAGE_PATHS = []
 # Size, in inches, of the output images.
-IMAGE_SIZE = (15, 10)
+IMAGE_SIZE = (10, 8)
 
 def select():
   filename = tkFileDialog.askopenfilename(initialdir='/home/daixinye/workspace', filetypes=[("*.jpg","*.jpg")])
-  TEST_IMAGE_PATHS.append(filename)
   if len(filename) == 0:
-    exit()
+    print('没有选择图片，请重新选择')
   else:
-    detect()
+    print('开始检测：' + filename)
+    detect([filename])
+    print('检测结束：' + filename)
 
 window = tk.Tk()
-window.title('柔性对象识别系统')
-window.geometry('800x400')
+window.title('柔性对象识别系统 by daixinye')
+window.geometry('400x200')
 
 button = tk.Button(window,
-  text='选择文件',
-  width=30,
-  height=2,
+  text='选择图片',
+  width=15,
+  height=1,
   command=select)
 
+label = tk.Label(window,
+  text='柔性对象识别系统',
+  width=15,
+  height=4)
+
+label_date = tk.Label(window,
+  text='2018-06-01',
+  width=15,
+  height=2)
+
+label_author = tk.Label(window,
+  text='daixinye',
+  width=15,
+  height=2)
+
+label.pack()
+label_date.pack()
+label_author.pack()
 button.pack()
 window.mainloop()
+window.destroy()
