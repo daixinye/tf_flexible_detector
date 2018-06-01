@@ -1,13 +1,5 @@
-
 # coding: utf-8
-
-# # Object Detection Demo
-# Welcome to the object detection inference walkthrough!  This notebook will walk you step by step through the process of using a pre-trained model to detect objects in an image. Make sure to follow the [installation instructions](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/installation.md) before you start.
-
-# # Imports
-
-# In[1]:
-
+## Imports
 
 import numpy as np
 import os
@@ -24,18 +16,11 @@ from PIL import Image
 
 from object_detection.utils import ops as utils_ops
 
-
 # ## Object detection imports
 # Here are the imports from the object detection module.
 
 from object_detection.utils import label_map_util
-
 from object_detection.utils import visualization_utils as vis_util
-
-# What model to download.
-# MODEL_NAME = 'ssd_mobilenet_v1_coco_2017_11_17'
-# MODEL_FILE = MODEL_NAME + '.tar.gz'
-# DOWNLOAD_BASE = 'http://download.tensorflow.org/models/object_detection/'
 
 # Path to frozen detection graph. This is the actual model that is used for the object detection.
 # PATH_TO_CKPT = MODEL_NAME + '/frozen_inference_graph.pb'
@@ -57,19 +42,12 @@ with detection_graph.as_default():
     od_graph_def.ParseFromString(serialized_graph)
     tf.import_graph_def(od_graph_def, name='')
 
-
 # ## Loading label map
 # Label maps map indices to category names, so that when our convolution network predicts `5`, we know that this corresponds to `airplane`.  Here we use internal utility functions, but anything that returns a dictionary mapping integers to appropriate string labels would be fine
 
 label_map = label_map_util.load_labelmap(PATH_TO_LABELS)
 categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes=NUM_CLASSES, use_display_name=True)
 category_index = label_map_util.create_category_index(categories)
-
-
-# ## Helper code
-
-# In[8]:
-
 
 def load_image_into_numpy_array(image):
   (im_width, im_height) = image.size
@@ -78,18 +56,6 @@ def load_image_into_numpy_array(image):
 
 
 # # Detection
-import tkFileDialog
-filename = tkFileDialog.askopenfilename(initialdir='/home/daixinye/workspace', filetypes=[("*.jpg","*.jpg")])
-if len(filename) == 0:
-  exit()
-# If you want to test the code with your images, just add path to the images to the TEST_IMAGE_PATHS.
-PATH_TO_TEST_IMAGES_DIR = 'test_images'
-# TEST_IMAGE_PATHS = [ os.path.join(PATH_TO_TEST_IMAGES_DIR, 'image{}.jpg'.format(i)) for i in range(1, 4) ]
-# TEST_IMAGE_PATHS = ['/home/daixinye/workspace/tf_febric_detector/_test/8cb21527f9d745d9dc4d538d617bdb92.jpg']
-TEST_IMAGE_PATHS = [filename]
-# Size, in inches, of the output images.
-IMAGE_SIZE = (15, 10)
-
 def run_inference_for_single_image(image, graph):
   with graph.as_default():
     with tf.Session() as sess:
@@ -136,26 +102,57 @@ def run_inference_for_single_image(image, graph):
         output_dict['detection_masks'] = output_dict['detection_masks'][0]
   return output_dict
 
-for image_path in TEST_IMAGE_PATHS:
-  image = Image.open(image_path)
-  # the array based representation of the image will be used later in order to prepare the
-  # result image with boxes and labels on it.
-  image_np = load_image_into_numpy_array(image)
-  # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
-  image_np_expanded = np.expand_dims(image_np, axis=0)
-  # Actual detection.
-  output_dict = run_inference_for_single_image(image_np, detection_graph)
-  # Visualization of the results of a detection.
-  vis_util.visualize_boxes_and_labels_on_image_array(
-      image_np,
-      output_dict['detection_boxes'],
-      output_dict['detection_classes'],
-      output_dict['detection_scores'],
-      category_index,
-      instance_masks=output_dict.get('detection_masks'),
-      use_normalized_coordinates=True,
-      line_thickness=8)
-  plt.figure(figsize=IMAGE_SIZE)
-  plt.imshow(image_np)
-  plt.show()
+def detect():
+  for image_path in TEST_IMAGE_PATHS:
+    image = Image.open(image_path)
+    # the array based representation of the image will be used later in order to prepare the
+    # result image with boxes and labels on it.
+    image_np = load_image_into_numpy_array(image)
+    # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
+    image_np_expanded = np.expand_dims(image_np, axis=0)
+    # Actual detection.
+    output_dict = run_inference_for_single_image(image_np, detection_graph)
+    # Visualization of the results of a detection.
+    vis_util.visualize_boxes_and_labels_on_image_array(
+        image_np,
+        output_dict['detection_boxes'],
+        output_dict['detection_classes'],
+        output_dict['detection_scores'],
+        category_index,
+        instance_masks=output_dict.get('detection_masks'),
+        use_normalized_coordinates=True,
+        line_thickness=8)
+    plt.figure(figsize=IMAGE_SIZE)
+    plt.imshow(image_np)
+    plt.show()
 
+import tkFileDialog
+import Tkinter as tk
+
+# If you want to test the code with your images, just add path to the images to the TEST_IMAGE_PATHS.
+PATH_TO_TEST_IMAGES_DIR = 'test_images'
+# TEST_IMAGE_PATHS = [ os.path.join(PATH_TO_TEST_IMAGES_DIR, 'image{}.jpg'.format(i)) for i in range(1, 4) ]
+TEST_IMAGE_PATHS = []
+# Size, in inches, of the output images.
+IMAGE_SIZE = (15, 10)
+
+def select():
+  filename = tkFileDialog.askopenfilename(initialdir='/home/daixinye/workspace', filetypes=[("*.jpg","*.jpg")])
+  TEST_IMAGE_PATHS.append(filename)
+  if len(filename) == 0:
+    exit()
+  else:
+    detect()
+
+window = tk.Tk()
+window.title('柔性对象识别系统')
+window.geometry('800x400')
+
+button = tk.Button(window,
+  text='选择文件',
+  width=30,
+  height=2,
+  command=select)
+
+button.pack()
+window.mainloop()
