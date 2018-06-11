@@ -1,0 +1,26 @@
+<annotation>
+	<folder>images</folder>
+	<filename>22.jpg</filename>
+	<path>/home/daixinye/workspace/tf_febric_detector/images/22.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>2476</width>
+		<height>1728</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>flexible</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>471</xmin>
+			<ymin>55</ymin>
+			<xmax>2043</xmax>
+			<ymax>1728</ymax>
+		</bndbox>
+	</object>
+</annotation>
