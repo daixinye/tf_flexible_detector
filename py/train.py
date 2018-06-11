@@ -54,7 +54,7 @@ from object_detection.utils import dataset_util
 
 tf.logging.set_verbosity(tf.logging.INFO)
 # GPU
-# os.environ['CUDA_VISIBLE_DEVICES']="0"
+os.environ['CUDA_VISIBLE_DEVICES']="0"
 
 flags = tf.app.flags
 flags.DEFINE_string('master', '', 'Name of the TensorFlow master to use.')
