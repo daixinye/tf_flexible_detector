@@ -24,11 +24,11 @@ from object_detection.utils import visualization_utils as vis_util
 
 # Path to frozen detection graph. This is the actual model that is used for the object detection.
 # PATH_TO_CKPT = MODEL_NAME + '/frozen_inference_graph.pb'
-PATH_TO_CKPT = '/home/daixinye/workspace/tf_febric_detector/_train/_train_2/output/frozen_inference_graph.pb'
+PATH_TO_CKPT = '/home/daixinye/workspace/tf_flexible_detector/_train/_train_3/output/frozen_inference_graph.pb'
 
 # List of the strings that is used to add correct label for each box.
 # PATH_TO_LABELS = os.path.join('data', 'mscoco_label_map.pbtxt')
-PATH_TO_LABELS = '/home/daixinye/workspace/tf_febric_detector/label_map.pbtxt'
+PATH_TO_LABELS = '/home/daixinye/workspace/tf_flexible_detector/label_map.pbtxt'
 
 NUM_CLASSES = 1
 

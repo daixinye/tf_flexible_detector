@@ -1,6 +1,6 @@
 #!/bin/bash
 
-path=~/workspace/tf_febric_detector
+path=~/workspace/tf_flexible_detector
 filename=$1
 
 if [ -r "$path/$filename.txt" ]; then

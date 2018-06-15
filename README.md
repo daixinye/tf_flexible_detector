@@ -1,4 +1,4 @@
-# tf_febric_detector
+# tf_flexible_detector
 
 ## 学习材料
 - [Introduction to Machine Learning](https://developers.google.cn/machine-learning/crash-course/ml-intro)
